@@ -1,0 +1,18 @@
+{
+  "manifest_version": 3,
+  "name": "Image Overlay Compare",
+  "description": "Overlay a reference image (e.g., from Figma) on any page to compare visually.",
+  "version": "0.1.0",
+  "action": {
+    "default_popup": "popup/popup.html"
+  },
+  "permissions": ["activeTab", "tabs", "storage", "clipboardRead"],
+  "host_permissions": ["<all_urls>"],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["shared/messages.js", "content/overlayContentScript.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}

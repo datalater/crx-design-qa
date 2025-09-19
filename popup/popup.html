@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Image Overlay Compare</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <div class="section-title">Clipboard Image</div>
+    <div
+      id="clipboardDropZone"
+      class="drop-zone"
+      tabindex="0"
+      aria-label="Paste image here"
+    ></div>
+    <div class="buttons-row">
+      <button id="pasteFromClipboardButton">Paste from Clipboard</button>
+    </div>
+    <div id="clipboardPreviewContainer" class="preview-container">
+      <img id="clipboardPreviewImage" alt="Clipboard preview" />
+      <div id="clipboardInfo" class="info"></div>
+    </div>
+
+    <div class="section-title">Image Library</div>
+    <div id="imageLibraryList" class="library-grid" aria-label="Saved images"></div>
+
+    <div class="section-title">Overlay Settings</div>
+    <div class="controls-grid">
+      <label
+        >Left (x)
+        <input id="positionXInput" type="number" step="1" value="0" />
+      </label>
+      <label
+        >Top (y)
+        <input id="positionYInput" type="number" step="1" value="0" />
+      </label>
+      <label
+        >Width
+        <input id="widthInput" type="number" step="1" value="0" />
+      </label>
+      <label
+        >Height
+        <input id="heightInput" type="number" step="1" value="0" />
+      </label>
+      <label
+        >Opacity
+        <input
+          id="opacityInput"
+          type="range"
+          min="0"
+          max="1"
+          step="0.01"
+          value="0.5"
+        />
+      </label>
+      <label
+        >Blend Mode
+        <select id="blendModeSelect">
+          <option value="normal">normal</option>
+          <option value="difference">difference</option>
+          <option value="multiply">multiply</option>
+          <option value="screen">screen</option>
+          <option value="overlay">overlay</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="buttons-row">
+      <button id="insertButton">Insert Overlay</button>
+      <button id="fitViewportWidthButton">Fit To Viewport Width</button>
+      <button id="applyButton">Apply Changes</button>
+      <button id="removeButton">Remove Overlay</button>
+    </div>
+
+    <div id="statusText" class="status"></div>
+
+    <script src="../shared/messages.js"></script>
+    <script src="popup.js"></script>
+  </body>
+</html>
