@@ -4,6 +4,8 @@
   --radius: 8px;
   --accent: #5b8def;
   --bg: #ffffff;
+  --scrollbar-thumb: #cbd5e1;
+  --scrollbar-thumb-hover: #94a3b8;
 }
 
 html,
@@ -16,24 +18,45 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
     Arial, sans-serif;
   color: #202124;
+  /* Firefox thin scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) transparent;
 }
 
 .section-title {
   font-weight: 600;
-  margin: var(--spacing) var(--spacing) 0 var(--spacing);
+  margin: 0 0 var(--spacing) 0;
 }
 
 .drop-zone {
-  margin: var(--spacing);
   border: var(--border);
   border-radius: var(--radius);
   padding: 16px;
   text-align: center;
   color: #666;
+  min-height: 84px;
+  display: grid;
+  place-items: center;
+}
+
+.drop-zone.drag-over {
+  border-color: #5b8def;
+  background: #eef4ff;
+}
+
+.drop-hint-title {
+  font-size: 14px;
+  color: #333;
+}
+
+.drop-hint-body {
+  margin-top: 4px;
+  font-size: 12px;
+  color: #666;
 }
 
 .preview-container {
-  margin: var(--spacing);
+  margin-top: var(--spacing);
   border: var(--border);
   border-radius: var(--radius);
   padding: var(--spacing);
@@ -51,7 +74,6 @@ body {
 }
 
 .controls-grid {
-  margin: var(--spacing);
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--spacing);
@@ -74,7 +96,7 @@ input[type="range"] {
 .buttons-row {
   display: flex;
   gap: var(--spacing);
-  margin: var(--spacing);
+  margin-top: var(--spacing);
 }
 
 button {
@@ -99,9 +121,14 @@ button:active {
 
 .library-grid {
   margin: var(--spacing);
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
+  flex-wrap: nowrap;
   gap: var(--spacing);
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) transparent;
 }
 
 .library-item {
@@ -110,6 +137,34 @@ button:active {
   padding: 4px;
   cursor: pointer;
   background: #fafafa;
+  flex: 0 0 auto;
+  width: 108px;
+}
+
+/* WebKit scrollbar styling (Chrome) */
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+*::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb);
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background-color: var(--scrollbar-thumb-hover);
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+*::-webkit-scrollbar-corner {
+  background: transparent;
+}
+*::-webkit-scrollbar-button {
+  height: 0;
+  width: 0;
+  display: none;
 }
 
 .library-item.selected {
@@ -130,4 +185,47 @@ button:active {
   font-size: 11px;
   color: #555;
   text-align: center;
+}
+
+.library-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 6px;
+  gap: 6px;
+}
+
+.library-delete-button {
+  padding: 4px 8px;
+  font-size: 11px;
+  border: 1px solid #f2c4c4;
+  background: #ffe9e9;
+  color: #8b1a1a;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.library-copy-button {
+  padding: 4px 8px;
+  font-size: 11px;
+  border: 1px solid #b9e7c5;
+  background: #e9fff0;
+  color: #1a7f3b;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.section-card {
+  margin: var(--spacing);
+  padding: 12px;
+  border: var(--border);
+  border-radius: var(--radius);
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+}
+
+.kv {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing);
+  font-size: 12px;
+  color: #333;
 }

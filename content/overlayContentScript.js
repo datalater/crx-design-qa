@@ -25,6 +25,12 @@ function installMessageListener() {
       fitOverlayToViewportWidth();
       reportOverlayState();
     }
+    if (message.type === window.__overlayCompare?.MessageType?.APPLY_GLOBAL_OUTLINE) {
+      applyGlobalOutlineToDocumentAndShadows();
+    }
+    if (message.type === window.__overlayCompare?.MessageType?.REMOVE_GLOBAL_OUTLINE) {
+      removeGlobalOutlineFromDocumentAndShadows();
+    }
     if (message.type === window.__overlayCompare?.MessageType?.REMOVE_OVERLAY) {
       removeOverlayIfPresent();
     }
@@ -33,6 +39,9 @@ function installMessageListener() {
       window.__overlayCompare?.MessageType?.REQUEST_OVERLAY_STATE
     ) {
       reportOverlayState();
+    }
+    if (message.type === window.__overlayCompare?.MessageType?.GET_VIEWPORT_INFO) {
+      reportViewportInfo();
     }
   });
 }
@@ -419,3 +428,54 @@ function reportOverlayState() {
     payload: { overlayState: overlayStateForReport },
   });
 }
+
+function reportViewportInfo() {
+  const width = window.innerWidth || document.documentElement.clientWidth || 0;
+  const height = window.innerHeight || document.documentElement.clientHeight || 0;
+  const dpr = window.devicePixelRatio || 1;
+  chrome.runtime.sendMessage({
+    type: window.__overlayCompare?.MessageType?.REPORT_VIEWPORT_INFO,
+    payload: { viewport: { width, height, devicePixelRatio: dpr } },
+  });
+}
+
+const OutlineStyleConfig = {
+  styleElementId: "overlayCompare__outlineStyle",
+  cssText:
+    "*, *::before, *::after { outline: 0.1px solid color-mix(in srgb, currentColor 70%, white 70%); }",
+};
+
+function applyGlobalOutlineToDocumentAndShadows() {
+  injectOutlineStyleIntoRoot(document);
+  const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_ELEMENT);
+  let node;
+  while ((node = walker.nextNode())) {
+    if (node.shadowRoot) injectOutlineStyleIntoRoot(node.shadowRoot);
+  }
+}
+
+function removeGlobalOutlineFromDocumentAndShadows() {
+  removeOutlineStyleFromRoot(document);
+  const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_ELEMENT);
+  let node;
+  while ((node = walker.nextNode())) {
+    if (node.shadowRoot) removeOutlineStyleFromRoot(node.shadowRoot);
+  }
+}
+
+function injectOutlineStyleIntoRoot(root) {
+  if (!root || !root.getElementById) return;
+  if (root.getElementById(OutlineStyleConfig.styleElementId)) return;
+  const style = document.createElement("style");
+  style.id = OutlineStyleConfig.styleElementId;
+  style.textContent = OutlineStyleConfig.cssText;
+  const parent = root.head || root;
+  parent.appendChild(style);
+}
+
+function removeOutlineStyleFromRoot(root) {
+  if (!root || !root.getElementById) return;
+  const existing = root.getElementById(OutlineStyleConfig.styleElementId);
+  if (existing && existing.parentNode) existing.parentNode.removeChild(existing);
+}
+

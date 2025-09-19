@@ -21,6 +21,12 @@ A Manifest V3 Chrome extension to paste a reference image (e.g., exported from F
 - Use popup "Apply Changes" to set precise values.
 - Click "Remove Overlay" to clear it.
 
+### Viewport Controls (optional)
+- Fields: Viewport Width, Height, DPR
+- Apply Viewport: Uses chrome.debugger to send DevTools Protocol Emulation.setDeviceMetricsOverride on the active tab (a small "debugging" banner may appear briefly).
+- Reset Emulation: Clears the override via Emulation.clearDeviceMetricsOverride.
+- Notes: You cannot use this while DevTools is already attached to the tab.
+
 ## Design and Code Principles
 
 - Clear, screaming-architecture oriented folders: `popup`, `content`, `shared`.

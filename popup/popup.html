@@ -7,26 +7,37 @@
     <link rel="stylesheet" href="popup.css" />
   </head>
   <body>
-    <div class="section-title">Clipboard Image</div>
-    <div
-      id="clipboardDropZone"
-      class="drop-zone"
-      tabindex="0"
-      aria-label="Paste image here"
-    ></div>
-    <div class="buttons-row">
-      <button id="pasteFromClipboardButton">Paste from Clipboard</button>
-    </div>
-    <div id="clipboardPreviewContainer" class="preview-container">
-      <img id="clipboardPreviewImage" alt="Clipboard preview" />
-      <div id="clipboardInfo" class="info"></div>
+    <div class="section-card">
+      <div class="section-title">Image Library</div>
+      <div id="imageLibraryList" class="library-grid" aria-label="Saved images"></div>
     </div>
 
-    <div class="section-title">Image Library</div>
-    <div id="imageLibraryList" class="library-grid" aria-label="Saved images"></div>
+    <div class="section-card">
+      <div class="section-title">Clipboard Image</div>
+      <div
+        id="clipboardDropZone"
+        class="drop-zone"
+        tabindex="0"
+        aria-label="Drop images here or paste"
+        role="button"
+      >
+        <div class="drop-hint-title">Drop images here or Paste</div>
+        <div class="drop-hint-body">Use Cmd/Ctrl+V or click Upload Image</div>
+      </div>
+      <div class="buttons-row">
+        <button id="pasteFromClipboardButton">Paste from Clipboard</button>
+        <button id="uploadImageButton">Upload Image</button>
+        <input id="fileInputHidden" type="file" accept="image/*" multiple style="display:none" />
+      </div>
+      <div id="clipboardPreviewContainer" class="preview-container">
+        <img id="clipboardPreviewImage" alt="Clipboard preview" />
+        <div id="clipboardInfo" class="info"></div>
+      </div>
+    </div>
 
-    <div class="section-title">Overlay Settings</div>
-    <div class="controls-grid">
+    <div class="section-card">
+      <div class="section-title">Overlay Settings</div>
+      <div class="controls-grid">
       <label
         >Left (x)
         <input id="positionXInput" type="number" step="1" value="0" />
@@ -64,16 +75,58 @@
           <option value="overlay">overlay</option>
         </select>
       </label>
+      </div>
     </div>
 
-    <div class="buttons-row">
-      <button id="insertButton">Insert Overlay</button>
-      <button id="fitViewportWidthButton">Fit To Viewport Width</button>
-      <button id="applyButton">Apply Changes</button>
-      <button id="removeButton">Remove Overlay</button>
+    <div class="section-card">
+      <div class="section-title">Overlay Actions</div>
+      <div class="buttons-row">
+        <button id="insertButton">Insert Overlay</button>
+        <button id="fitViewportWidthButton">Fit To Viewport Width</button>
+        <button id="applyButton">Apply Changes</button>
+        <button id="removeButton">Remove Overlay</button>
+      </div>
     </div>
 
     <div id="statusText" class="status"></div>
+
+    <div class="section-card">
+      <div class="section-title">Current Viewport</div>
+      <div class="kv">
+        <div>Size: <span id="displayViewportSize">-</span></div>
+        <div>DPR: <span id="displayViewportDpr">-</span></div>
+      </div>
+      <div class="buttons-row">
+        <button id="refreshViewportInfoButton">Refresh</button>
+      </div>
+    </div>
+
+    <div class="section-card">
+      <div class="section-title">Viewport Controls</div>
+      <div class="controls-grid">
+        <label>Viewport Width
+          <input id="viewportWidthInput" type="number" step="1" value="1440" />
+        </label>
+        <label>Viewport Height
+          <input id="viewportHeightInput" type="number" step="1" value="900" />
+        </label>
+        <label>DPR
+          <input id="viewportDprInput" type="number" step="0.25" value="1" />
+        </label>
+      </div>
+      <div class="buttons-row">
+        <button id="applyViewportButton">Apply Viewport</button>
+        <button id="resetViewportButton">Reset Emulation</button>
+      </div>
+    </div>
+
+    <div class="section-card">
+      <div class="section-title">Page Tools</div>
+      <div class="buttons-row">
+        <button id="applyOutlineButton">Show Outline</button>
+        <button id="removeOutlineButton">Hide Outline</button>
+      </div>
+    </div>
 
     <script src="../shared/messages.js"></script>
     <script src="popup.js"></script>

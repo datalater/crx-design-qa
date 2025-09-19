@@ -1,12 +1,20 @@
 {
   "manifest_version": 3,
-  "name": "Image Overlay Compare",
-  "description": "Overlay a reference image (e.g., from Figma) on any page to compare visually.",
+  "name": "Design QA Assistant",
+  "description": "Anywhere, any time, QA your designs.",
   "version": "0.1.0",
   "action": {
     "default_popup": "popup/popup.html"
   },
-  "permissions": ["activeTab", "tabs", "storage", "clipboardRead"],
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "storage",
+    "unlimitedStorage",
+    "clipboardRead",
+    "clipboardWrite",
+    "debugger"
+  ],
   "host_permissions": ["<all_urls>"],
   "content_scripts": [
     {
