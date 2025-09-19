@@ -56,6 +56,8 @@ function queryPopupElements() {
     resetViewportButton: document.getElementById("resetViewportButton"),
     applyOutlineButton: document.getElementById("applyOutlineButton"),
     removeOutlineButton: document.getElementById("removeOutlineButton"),
+    startSpacingInspectorButton: document.getElementById("startSpacingInspectorButton"),
+    stopSpacingInspectorButton: document.getElementById("stopSpacingInspectorButton"),
     statusText: document.getElementById("statusText"),
   };
 }
@@ -188,6 +190,19 @@ function wireButtons(elements, state) {
     elements.removeOutlineButton.addEventListener("click", async () => {
       await sendMessageToActiveTab({ type: window.__overlayCompare.MessageType.REMOVE_GLOBAL_OUTLINE });
       setStatus(elements, "Outline removed.");
+    });
+  }
+
+  if (elements.startSpacingInspectorButton) {
+    elements.startSpacingInspectorButton.addEventListener("click", async () => {
+      await sendMessageToActiveTab({ type: window.__overlayCompare.MessageType.START_SPACING_INSPECTOR });
+      setStatus(elements, "Spacing inspector started. Esc or Exit to stop.");
+    });
+  }
+  if (elements.stopSpacingInspectorButton) {
+    elements.stopSpacingInspectorButton.addEventListener("click", async () => {
+      await sendMessageToActiveTab({ type: window.__overlayCompare.MessageType.STOP_SPACING_INSPECTOR });
+      setStatus(elements, "Spacing inspector stopped.");
     });
   }
 
