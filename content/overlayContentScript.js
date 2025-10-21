@@ -1,3 +1,5 @@
+const Z_INDEX_MAX = 2147483647;
+
 (function main() {
   installMessageListener();
   installKeyboardShortcuts();
@@ -309,7 +311,7 @@ function applyOverlayContainerStyle(container) {
   container.style.top = "0px";
   container.style.width = "0px";
   container.style.height = "0px";
-  container.style.zIndex = String(2147483647);
+  container.style.zIndex = String(Z_INDEX_MAX);
   container.style.pointerEvents = "auto";
   container.style.boxSizing = "border-box";
   container.style.border = "1px dashed rgba(0,0,0,0.3)";
@@ -684,7 +686,7 @@ function ensureSpacingInspectorOverlay() {
   container.style.top = "0";
   container.style.width = "100%";
   container.style.height = "100%";
-  container.style.zIndex = String(2147483647);
+  container.style.zIndex = String(Z_INDEX_MAX);
   container.style.pointerEvents = "none";
   document.documentElement.appendChild(container);
 
@@ -742,6 +744,7 @@ function applyLayerBaseStyle(layer, background) {
   layer.style.width = "0";
   layer.style.height = "0";
   layer.style.background = background;
+  layer.style.opacity = "0.5";
 }
 
 function renderSpacingForElement(element) {
@@ -968,7 +971,7 @@ function addOutlineRect(container, rect, color) {
   outline.style.border = `1px dashed ${color}`;
   outline.style.background = "transparent";
   outline.style.pointerEvents = "none";
-  outline.style.zIndex = String(2147483647);
+  outline.style.zIndex = String(Z_INDEX_MAX);
   container.appendChild(outline);
 }
 
@@ -978,7 +981,7 @@ function addPairLine(container, x1, y1, x2, y2, orientation, value) {
   line.style.position = "fixed";
   line.style.background = "rgba(236, 72, 153, 0.9)"; // pink
   line.style.pointerEvents = "none";
-  line.style.zIndex = String(2147483647);
+  line.style.zIndex = String(Z_INDEX_MAX);
   if (orientation === "h") {
     const left = Math.min(x1, x2);
     const width = Math.abs(x2 - x1);
@@ -1008,7 +1011,7 @@ function addPairLine(container, x1, y1, x2, y2, orientation, value) {
     label.style.padding = "2px 4px";
     label.style.borderRadius = "4px";
     label.style.pointerEvents = "none";
-    label.style.zIndex = String(2147483647);
+    label.style.zIndex = String(Z_INDEX_MAX);
     if (orientation === "h") {
       const left = Math.min(x1, x2);
       const width = Math.abs(x2 - x1);
@@ -1046,7 +1049,7 @@ function applyTooltipBaseStyle(tooltip) {
   tooltip.style.borderRadius = "8px";
   tooltip.style.padding = "8px 10px";
   tooltip.style.pointerEvents = "none";
-  tooltip.style.zIndex = String(2147483647);
+  tooltip.style.zIndex = String(Z_INDEX_MAX);
   tooltip.style.transform = "translate(-50%, -100%)";
   tooltip.style.display = "none";
   tooltip.style.whiteSpace = "normal";
@@ -1396,7 +1399,7 @@ function addDistanceLabel(container, x, y, value, side) {
   label.dataset.overlayDistanceLabel = "1";
   label.textContent = String(value) + "px";
   label.style.position = "fixed";
-  label.style.zIndex = String(2147483647);
+  label.style.zIndex = String(Z_INDEX_MAX);
   label.style.fontSize = "11px";
   label.style.lineHeight = "1";
   label.style.color = "#ffffff";
@@ -1437,7 +1440,7 @@ function addGapBandRect(container, box, color) {
   el.style.height = h + "px";
   setHatchBackground(el, InspectorColors.gap, 0.55);
   el.style.pointerEvents = "none";
-  el.style.zIndex = String(2147483647);
+  el.style.zIndex = String(Z_INDEX_MAX - 1);
   container.appendChild(el);
 }
 
