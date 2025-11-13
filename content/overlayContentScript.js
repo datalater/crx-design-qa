@@ -540,15 +540,23 @@ const OutlineStyleConfig = {
     "*, *::before, *::after { outline: 0.1px solid color-mix(in srgb, currentColor 70%, white 70%); }",
 };
 
-function applyGlobalOutlineToDocumentAndShadows() {
-  injectOutlineStyleIntoRoot(document);
-  const walker = document.createTreeWalker(
-    document.body,
+function applyGlobalOutlineToDocumentAndShadows(rootDoc = document) {
+  injectOutlineStyleIntoRoot(rootDoc);
+  const walker = rootDoc.createTreeWalker(
+    rootDoc.body,
     NodeFilter.SHOW_ELEMENT
   );
   let node;
   while ((node = walker.nextNode())) {
     if (node.shadowRoot) injectOutlineStyleIntoRoot(node.shadowRoot);
+    if (node.tagName === "IFRAME") {
+      try {
+        const frameDoc = node.contentDocument;
+        if (frameDoc) applyGlobalOutlineToDocumentAndShadows(frameDoc);
+      } catch (_) {
+        /* cross-origin iframe: ignore */
+      }
+    }
   }
 }
 
